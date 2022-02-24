@@ -14,7 +14,7 @@ namespace classExample
             CDatabase db = new CDatabase();
             db.tQueryProductFromdb();
 
-            CInventory p1 = new CInventory("Fork", 3339.1435443);
+            //CInventory p1 = new CInventory("Fork", 3339.1435443);
 
 
         }
