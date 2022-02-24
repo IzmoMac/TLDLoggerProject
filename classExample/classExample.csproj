@@ -74,7 +74,7 @@
     <Compile Include="CDivice.cs" />
     <Compile Include="CInput.cs" />
     <Compile Include="CMultiply.cs" />
-    <Compile Include="CMySqlConnection.cs" />
+    <Compile Include="CDatabase.cs" />
     <Compile Include="COutput.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

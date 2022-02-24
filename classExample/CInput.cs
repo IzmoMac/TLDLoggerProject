@@ -10,7 +10,7 @@ namespace classExample
     {
         readonly COutput cn = new COutput();
 
-        public void Read()
+        public void ReadInt()
         {
             cn.Write("Anna ensimmäinen luku:");
             int eka = cn.ReadInteger();
@@ -19,6 +19,13 @@ namespace classExample
             int toka = cn.ReadInteger();
 
             new CCalculate(eka, toka).Result();
+        }
+
+        public string Read()
+        {
+            cn.Write("Type product name:");
+            string s = Console.ReadLine();
+            return s;
         }
     }
 }

@@ -5,6 +5,48 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 
+/* Kommentteja
+Aloitetaan siitä että:
+Funktio getspecificitemfromdatabase
+  Funktio Kysytään käyttäjältä tavaran nimi
+  Funktio luodaan yhteys tietokantaan
+  Funktio kysytään tavara tietokannasta
+  Funktio lue tietokannnan vastaus
+  Funktio suljetaan yhteys tietokannasta
+  Funktio Näytetään kysytyn tavaran tiedot käyttäjälle
+
+Funktio kysytään käyttäjältä tavaran nimi
+Create a variable userInputproductname type string
+ask for input "Product name: " and set userInputproductname
+
+Funktio luodan yhteys tietokantaan
+create a variable connectionString type string initVal "a valid connectionstring"
+Connect to database using connectionString
+
+Funktio kysytään tavara tietokannasta
+create a variable queryString type "string"
+queryString = "select userInputproductname from tProduct"
+send command to db using queryString
+
+Funktio lue tietokannnan vastaus
+create a variable dbResult type "string"
+read database result
+dbResult = read result from database
+
+Funktio suljetaan yhteys tietokantaan
+Close connection with database
+
+Funktio Näytetään kysytyn tavaran tiedot käyttäjälle
+if dbResult == userInputProductName
+    Say "Success"
+else
+    Say "Failure"
+
+Print dbResult
+
+
+
+ */
 
 
 namespace classExample
@@ -12,19 +54,25 @@ namespace classExample
     class CDatabase
     {
         COutput cn = new COutput();
-
+        CInput input = new CInput();
         SqlConnection connection = new SqlConnection();
 
         public string productName { get; set; }
+        private string connectionString { get; set; }
+        private string queryString { get; set; }
         private string address = "IZMO-PC-1EO7KE1\\SQLEXPRESS";
         private string database = "loggerTLD";
         private Boolean trustedConnection = true;
-        private string connectionString { get; set; }
-        private string queryString { get; set; }
+
        
         public void CompileConnectionString()
         {
             connectionString = $"address={address};database={database};Trusted_Connection={trustedConnection}";
+        }
+
+        public void CompileQueryString()
+        {
+            queryString = $"select ProductName,ProductWeight from tProduct where Productname = '{productName}';";
         }
 
         public void OpenSqlConnection()
@@ -34,6 +82,11 @@ namespace classExample
             connection.Open();
         }
 
+        public void TestSqlConnection()
+        {
+            Console.WriteLine(connection.State);
+        }
+
         public void CloseSqlConnection()
         {
             connection.Close();    
@@ -41,18 +94,11 @@ namespace classExample
 
         public void AskForProductName()
         {
-            Console.WriteLine("Product name: ");
-            productName = Console.ReadLine();
+            productName = input.Read();
         }
 
-        public void CompileQueryString()
+        public void QueryCommand()
         {
-            queryString = $"select ProductName,ProductWeight from tProduct where Productname = '{productName}';";
-        }
-
-        public void QueryProductFromdb()
-        {
-            OpenSqlConnection();
             CompileQueryString();
             SqlCommand cmd = new SqlCommand(queryString, connection);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -68,14 +114,32 @@ namespace classExample
             {
                 Console.WriteLine("No data to read");
             }
-            CloseSqlConnection();
+            reader.Close();
         }
-        
-        public void TestSqlConnection()
+
+        //public void QueryProductFromdb()
+        //{
+        //    AskForProductName();
+        //    OpenSqlConnection();
+        //    QueryCommand();
+        //    CloseSqlConnection();
+        //}
+        public void QueryProductFromdb(int i = 1)
         {
-            Console.WriteLine(connection.State);
+            for (int j = 0; j < i; j++)
+            {
+                AskForProductName();
+                OpenSqlConnection();
+                QueryCommand();
+                CloseSqlConnection();
+            }
         }
+
+
 
 
     }
 }
+
+
+
