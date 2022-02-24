@@ -65,19 +65,13 @@ namespace classExample
         private Boolean trustedConnection = true;
 
        
-        public void CompileConnectionString()
+        public CDatabase()
         {
             connectionString = $"address={address};database={database};Trusted_Connection={trustedConnection}";
         }
 
-        public void CompileQueryString()
-        {
-            queryString = $"select ProductName,ProductWeight from tProduct where Productname = '{productName}';";
-        }
-
         public void OpenSqlConnection()
         {
-            CompileConnectionString();
             connection.ConnectionString = connectionString;
             connection.Open();
         }
@@ -96,7 +90,10 @@ namespace classExample
         {
             productName = input.Read();
         }
-
+        public void CompileQueryString()
+        {
+            queryString = $"select * from vProduct where Productname = '{productName}';";
+        }
         public void QueryCommand()
         {
             CompileQueryString();
@@ -124,7 +121,7 @@ namespace classExample
         //    QueryCommand();
         //    CloseSqlConnection();
         //}
-        public void QueryProductFromdb(int i = 1)
+        public void tQueryProductFromdb(int i = 1)
         {
             for (int j = 0; j < i; j++)
             {
@@ -134,7 +131,6 @@ namespace classExample
                 CloseSqlConnection();
             }
         }
-
 
 
 

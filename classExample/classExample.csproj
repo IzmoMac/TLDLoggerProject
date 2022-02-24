@@ -76,6 +76,7 @@
     <Compile Include="CMultiply.cs" />
     <Compile Include="CDatabase.cs" />
     <Compile Include="COutput.cs" />
+    <Compile Include="CInventory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

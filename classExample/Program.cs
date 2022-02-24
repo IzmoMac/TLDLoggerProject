@@ -12,10 +12,11 @@ namespace classExample
         {
             COutput cn = new COutput();
             CDatabase db = new CDatabase();
+            db.tQueryProductFromdb();
 
-            db.QueryProductFromdb();
+            CInventory p1 = new CInventory("Fork", 3339.1435443);
 
-            
+
         }
     }
 }
