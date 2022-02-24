@@ -23,7 +23,7 @@ namespace classExample
 
         public string Read()
         {
-            cn.Write("Type product name:");
+            cn.Write("What is the product name?");
             string s = Console.ReadLine();
             return s;
         }

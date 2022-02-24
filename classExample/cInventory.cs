@@ -8,11 +8,14 @@ namespace classExample
 {
     class CInventory
     {
-        string ProductName;
-        string Region;
-        float Condition;
-        int DayStored;
-        string Place;
+        CDatabase db = new CDatabase();
+        string ProductName { get; set; }
+        string Region { get; set; }
+        float Condition { get; set; }
+        int DayStored { get; set; }
+        string Place { get; set; }
+
+
         public CInventory(string aProductName,string aRegion, float aCondition, int aDaystored, string aPlace)
         {
             //NEEDS: Place checks to check that everything is correct format?
@@ -22,10 +25,19 @@ namespace classExample
             DayStored = aDaystored;
             Place = aPlace;
         }
-        public void InventoryAdd()
+        public CInventory()
         {
 
         }
-    
-}
+        public void InventoryAdd()
+        {
+            
+        }
+
+        public int GetProductKey(string _productName)
+        {
+            db.queryString = $"select ProductKey from tProduct where ProductName = '{_productName}';";
+            return db.QueryProductKey();
+        }
+    }
 }
