@@ -13,10 +13,6 @@ namespace classExample
     {
         COutput cn = new COutput();
 
-        //private CMySqlConnection()
-        //{
-        //}
-
         SqlConnection connection = new SqlConnection();
 
         public string Server { get; set; }
@@ -26,51 +22,92 @@ namespace classExample
 
         string address = "IZMO-PC-1EO7KE1S/QLEXPRESS";
         string database = "loggerTLD";
-        int timeout = 15;
 
         readonly string connectionstring = "address=IZMO-PC-1EO7KE1\\SQLEXPRESS;database=loggerTLD;Trusted_Connection=True";
-        //public void checkmysqlconnection()
-        //{
-        //    new cmysqlconnection().opensqlconnection();
-        //    cn.result((int)connection.state);
-        //    console.writeline(connection.state);
-        //}
+        
+
+        public string productName { get; set; }
+
+        string queryString;
+       
         public void OpenSqlConnection()
         {
-            //SqlConnection connection = new SqlConnection();
 
             connection.ConnectionString = connectionstring;
             connection.Open();
-            int conn = (int)connection.State;
-            if (conn == 1)
-                cn.Write("Connection Succesfull");
-            else
-                cn.Write("Connection failed");
-            //Console.WriteLine(connection.ClientConnectionId);
-        
-
+            
         }
-        
-        
 
-        static private string GetConnectionString()
+        public void AskForProductName()
         {
-            string Server = "hgh";
-            return "tää palaa";
+            Console.WriteLine("Product name: ");
+            productName = Console.ReadLine();
 
         }
 
+        public void QueryProductFromdb()
+        {
+            queryString = $"select ProductName,ProductWeight from tProduct where Productname = '{productName}';";
+            OpenSqlConnection();
+            SqlCommand cmd = new SqlCommand(queryString, connection);
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                reader.Read();
+                for (int i = 0; i < 2; i++)
+                {
+                    Console.WriteLine(reader[i]);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No data to read");
+            }
+            CloseSqlConnection();
+
+        }
+        public void CloseSqlConnection()
+        {
+            connection.Close();
+
+        }
+        public void TestSqlConnection()
+        {
+            Console.WriteLine(connection.State);
+        }
 
 
+        // create input for user query terms as string
+        // create result from database string/table
 
+        // kesken, tavoite, avaa sql yhteys
+        // kysy haku ehto käyttäjältä
+        // lähetä hakuehto eteenpäin
+        // vastaan ota tulos
+        // näytä haku käyttäjälle
+        //public void QuerySqlConnection(string queryString)
+        //{
+        //    OpenSqlConnection();
+        //    SqlCommand command = new SqlCommand(queryString);
+        //    command.ExecuteReader();
+       
+        //}
+
+
+        /*
+         * 
+         */
         public void Kakku()
         {
-            
+            cn.DrawLine();
             cn.Write(database);
             cn.Write(address);
-            cn.Write("tää toimii");
-            
-            
+            cn.Write(connectionstring);
+            cn.DrawLine();
+
         }
+
+       
+
     }
 }

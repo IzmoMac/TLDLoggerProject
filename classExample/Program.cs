@@ -10,32 +10,37 @@ namespace classExample
 
         static void Main(string[] args)
         {
-            /*
-            new cinput().read();
+            COutput cn = new COutput();
+            CMySqlConnection con = new CMySqlConnection();
 
-            
-            new ccalculate(10, 2).result();
-            new ccalculate(7, 4).result();
-            new ccalculate(73, 0).result();
-            new ccalculate(73, 413).result();
-            new ccalculate(54, 14).result();
-            
+            //con.TestSqlConnection();
 
-            system.threading.thread.sleep(cwait);
-            */
+            //con.AskForProductName();
 
-            var names = new List<string> { "<name>", "Ana", "Felipe" };
-            foreach (var name in names)
+            //cn.Write(con.productName);
+            //con.OpenSqlConnection();
+            Boolean keepGoing = true;
+            string input;
+            while (keepGoing)
             {
-                //Console.WriteLine($"Hello {name.ToUpper()}!");
+                con.AskForProductName();
+                con.QueryProductFromdb();
+                Console.WriteLine("search again?");
+                input = Console.ReadLine();
+                if (input == "no")
+                {
+                    keepGoing = false;
+                }
+                else
+                { }
+                
             }
-
-            new List<string> { "kakku", "muffinssi", "Munkki" };
-
-            new CMySqlConnection().Kakku();
-            new CMySqlConnection().OpenSqlConnection();
-            //new CMySqlConnection().CheckMySqlConnection();
-
         }
     }
 }
+
+
+
+/*
+ * 
+ */
