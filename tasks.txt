@@ -11,10 +11,25 @@ eli:
 Tarvitaan luoda yhteys alg
 create variable connectionstring-arguments type string initvalue ""
 connect to database using connectionstring-arguments
-
 create variable database-query type string initvalue ""
 
+Pitää luoda yhteys
+Hakea tietoa
+Sulkea yhteys
+Näyttää tieto
 
+Pitää luoda yhteys
+lisätä tietoa
+sulkea yhteys
+
+Pitää luoda yhteys
+
+aloitetaan siitä että:
+Kysytään käyttäjältä tavaran nimi
+luodaan yhteys
+kysytään tavara tietokannasta
+suljetaan yhteys
+Näytetään kysytyn tavaran tiedot käyttäjälle
 
 TEACHINGS
 
