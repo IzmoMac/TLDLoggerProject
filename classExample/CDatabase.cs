@@ -53,72 +53,29 @@ namespace classExample
 {
     class CDatabase
     {
-        COutput cn = new COutput();
-        CInput input = new CInput();
         SqlConnection connection = new SqlConnection();
 
-        public string productName { get; set; }
         private string connectionString { get; set; }
         public string queryString { get; set; }
         private string address = "IZMO-PC-1EO7KE1\\SQLEXPRESS";
         private string database = "loggerTLD";
         private Boolean trustedConnection = true;
-        private string userInput;
         private int returnValue;
         public CDatabase()
         {
             connectionString = $"address={address};database={database};Trusted_Connection={trustedConnection}";
+            connection.ConnectionString = connectionString;
+            queryString = "";
         }
-
         public void OpenSqlConnection()
         {
-            connection.ConnectionString = connectionString;
             connection.Open();
         }
-
-        public void TestSqlConnection()
-        {
-            Console.WriteLine(connection.State);
-        }
-
         public void CloseSqlConnection()
         {
             connection.Close();    
         }
-
-        public string AskForProductName()
-        {
-            return input.Read();
-        }
-        public void vProduct(string _Input)
-        {
-            if (_Input.Contains("."))
-                queryString = $"select * from vProduct where ProductWeight = '{_Input}';";
-            else
-            {
-                queryString = $"select * from vProduct where ProductName = '{_Input}';";
-            }
-        }
-        public void ProductKey(string _Input)
-        {
-            queryString = $"select ProductKey from tProduct where ProductName = '{_Input}';";
-        }
-        public void tQueryCommand()
-        {
-            SqlCommand cmd = new SqlCommand(queryString, connection);
-            SqlDataReader reader = cmd.ExecuteReader();
-            int i = reader.FieldCount;
-                while (reader.Read())
-                {   
-                    for (int j = 0; j < i; j++)
-                    {
-                        Console.WriteLine(reader[j]);
-                    }
-                }
-            Console.WriteLine("No more data to read");
-            reader.Close();
-        }
-        public void QueryCommand()
+        public void QueryInt()
         {
             SqlCommand cmd = new SqlCommand(queryString, connection);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -133,40 +90,69 @@ namespace classExample
                 //cn.Write("No product found");
                 reader.Close();
         }
-
-        //public void QueryProductFromdb()
-        //{
-        //    AskForProductName();
-        //    OpenSqlConnection();
-        //    QueryCommand();
-        //    CloseSqlConnection();
-        //}
-        public void tQueryProductFromdb(int i = 1)
+        public void Query()
         {
-            for (int j = 0; j < i; j++)
+            SqlCommand cmd = new SqlCommand(queryString, connection);
+            SqlDataReader reader = cmd.ExecuteReader();
+            int i = reader.FieldCount;
+            while (reader.Read())
             {
-                ProductKey(AskForProductName());
-                OpenSqlConnection();
-                QueryCommand();
-                CloseSqlConnection();
+                for (int j = 0; j < i; j++)
+                {
+                    Console.Write($"{reader[j]} ;  ");
+                }
+                Console.Write("\n");
             }
+            //cn.Write("No product found");
+            reader.Close();
         }
-        public int getProductKey()
+        public void NonQuery()
         {
-            ProductKey(AskForProductName());
             OpenSqlConnection();
-            QueryCommand();
+            SqlCommand cmd = new SqlCommand(queryString, connection);
+            int rowsAdded = cmd.ExecuteNonQuery();
+            Console.WriteLine($"{rowsAdded} rows added");
+            CloseSqlConnection();
+        }
+        public int QueryKey()
+        {
+            OpenSqlConnection();
+            QueryInt();
             CloseSqlConnection();
             return returnValue;
         }
-        public int QueryProductKey()
+        public void QueryView()
         {
             OpenSqlConnection();
-            QueryCommand();
-            CloseSqlConnection();
-            return returnValue;
+            Query();
+            CloseSqlConnection ();
         }
-
+        public void ViewInventory()
+        {
+            queryString = "SELECT * FROM vInventory";
+            QueryView();
+        }
+        public void DeleteAllClothFromInventory()
+        {
+            queryString = "delete from tInventory where ProductKey = 50";
+            NonQuery();
+        }
+        public void InsertToInventory(int productKey, int regionKey, float condition, int dayStored, string place)
+        {
+            queryString = $"INSERT INTO tInventory VALUES (GETDATE(),GETDATE(),1,'{productKey}','{regionKey}','{condition}','{dayStored}','{place}');";
+            NonQuery();
+        }
+        public int GetProductKeyFromName(string _productName)
+        {
+            queryString = $"select ProductKey from tProduct where ProductName = '{_productName}';";
+            return QueryKey();
+        }
+        public int GetRegionKeyFromName(string _regionName)
+        {
+            queryString = $"select RegionKey from tRegion where RegionName = '{_regionName}';";
+            return QueryKey();
+        }
+       
     }
 }
 

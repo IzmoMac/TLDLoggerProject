@@ -11,9 +11,16 @@ namespace classExample
         {
             COutput cn = new COutput();
             CDatabase db = new CDatabase();
-            CInventory ci = new CInventory();
+            CInput ci = new CInput();
+            //CInventory ci = new CInventory();
             //CInventory p1 = new CInventory("Fork", 3339.1435443);
-            Console.WriteLine(ci.ProductKey("cloth"));
+            //Console.WriteLine(db.GetProductKey("cloth"));
+
+            //new CInventory("cloth", "mystery lake", 100, 1, "hunters cabin").AddItem();
+            //db.DeleteAllClothFromInventory();
+
+            ci.AddProductToInventory();
+            db.ViewInventory();
         }
     }
 }
