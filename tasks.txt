@@ -1,0 +1,335 @@
+Tasks and Learning material
+
+Next thing to do:
+
+Do Sql command object
+https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlcommand?view=dotnet-plat-ext-6.0
+
+in plain:
+eli:
+
+Tarvitaan luoda yhteys alg
+create variable connectionstring-arguments type string initvalue ""
+connect to database using connectionstring-arguments
+create variable database-query type string initvalue ""
+
+Pitää luoda yhteys
+Hakea tietoa
+Sulkea yhteys
+Näyttää tieto
+
+Pitää luoda yhteys
+lisätä tietoa
+sulkea yhteys
+
+Pitää luoda yhteys
+
+aloitetaan siitä että:
+Kysytään käyttäjältä tavaran nimi
+luodaan yhteys
+kysytään tavara tietokannasta
+suljetaan yhteys
+Näytetään kysytyn tavaran tiedot käyttäjälle
+
+TEACHINGS
+
+Code explains the comments to the computer
+(Comments dont  explain code to the programmers)
+
+24:00->
+https://youtu.be/azcrPFhaY9k?t=1440
+
+New variable
+ - Name: what do we call this thing?
+ - Type: what type of data does it contain?
+ - InitVal: what is it's starting value?
+   
+New variable algorithm:
+Create a variable called NAME of type TYPE that starts with the value INITVAL
+
+Output:
+message: text to write to user
+
+Input:
+- variable: where answer from user will be stored'
+- message: question being asked of the user
+
+Input algorithm
+ask the user message and store the answer in variable
+ 
+While loop:
+sentry: variable that will control loop
+initialization code: code that initializes sentry
+condition: loop repeats if condition is true
+change code: code to change sentry so condition can be triggered
+
+While loop algorithm:
+Initialize sentry with initialization code
+then continue loop as long as condition is true.
+Inside loop, change sentry with change code
+
+For loop:
+sentry: integer variable that will control loop
+star: integer value of sentry at the beginning
+finish: integer value of sentry at end
+change: integer to add to sentry at each pass
+
+For algorithm
+begin with sentry at start and 
+add change to sentry on each pass 
+until sentry is larger or equal to finish
+
+Debug
+bad implementation can be googloed
+bad algorithms usually cannot
+what are you not understanding?
+what tools can you use?
+DONT start with a solution
+start by truly understanding the problem
+-
+Use of print statements for debuggins is ok, but not ideal
+Diagnostic print statemetns should not be part of final code
+Use of a debugger is preferred when possible
+Learn command-line debuggers just in case
+In some casers you will asloe need to use other tools like valgrind
+====
+what is being asked
+given input x, what are the steps necessary to return output Y?
+divide into subproblems
+simplest first
+sub problem doesnt depend on others being solved
+
+====
+A Good Programmer
+
+A good programmer doesnt seem to make as many errors
+A good programmer is not thrown off by errors for as long
+Experienced programmers have good coding habits
+Sometimes they are imposed by a teacher or boss
+Good standards arent restrictive
+They prevent bugs from occurring
+Guardrails keep us safe
+
+Coding standards:
+
+DOCUMENTATION
+You must have documentation: it might be internal, it may be seperate file, or ideally both:
+At minimun, you should describe what the program does
+You should have at leaast a quick description of each function
+Any time you do something 'clever' you should document that line so youll understand it late
+Sometimes you will be required to include cerain documentation in certain format
+
+Each program or function should have the following information:
+Goals - What is the goal of the program of function?
+Input - What (if any) input does the function or program accept? Are there specific data typer or ranges?
+Output - What (if any) output does the function or program return
+Steps - What are the steps (written in  English) necessary to solve this problem. This should NOT be programming code, but each line should be specific enough to be translated to a line or two of code in your target language. Each step should be able to be written in any language of code. And they should be so precise that you can google each line and have a good shot at getting back to code. Decide what to do and google to figure out how to do.
+(Algorith) Documentaion should be written BEFORE coding, not after
+------- documentationn doesnt explain the code: The code explains the documentation
+
+CONCISE CODING
+Each line shoould solve only one thing when possible
+example: x =parseint(rand(a, process(b)))
+This line will break the code
+Consider breaking it into several lines NOW, becasue you will have to anyways when it breaks.
+Fewer lines doesnt mean more efficient code.
+
+Optimizaton? Not so fast
+----Optimize for the programmer first
+The Most inefficient part of modern coding is debugging
+Make it easy to understand first
+Dont worry about maximizing time or space efficiency until your code is actually working
+Dont tune an engine that isnt running
+"Premature optimization is the root of all evil" - Donald Knuth, father of algorithm analysis
+
+INDENTATION
+Indentation is NOT optional, regarldess of the langauge
+Indent the content of every branch, loop, function, and class
+Make sure your 'outdents' match your indents
+Consider labelling your } characters with comments ("end if loop", "end class" , "end function")
+If you think you are done coding and you arent back at the left margin, soemthing is wrong
+
+VARIABLE NAMES
+Should generally be full words or phrases
+x and y should be generally be used only as coordinates or in math
+i can be a counthing when no better name
+Avoid abbreviations: "userName" is better than "un" or "uName"
+Use specific names to avoid using keywords: userName rather than name
+
+CAPITALIZATON
+Ordinary variables (inlcuding class instances) should begin with a lowercase letter
+Class names should begin with an uppercase letter
+Use camel-casing to combine long names: userName rather than username. user_name is ok but no rpeferd
+Constatns or var taht are constant should be all upperCase (NUM_VALUES)
+
+SELF-DOCUMENTING VARIABLES
+
+Type indentifiers are not required, but can be helpful in GUI applications: txtUsername is a textbox conating the user name, and userName is the acutal user name string
+The best variable names lead to self documenting code:
+if (guess == correct)
+array names can be plural, but individual values should not be
+
+VARIABLE SCOPE
+Avoid global vairables. Use parameters and return vales to manage passing data if possible
+Global constatnsa are fine
+In an OOP setting, class-level properties are fine, but should still be protected (setters getters data hiding)
+
+FILENAMES
+File names should be sinlge words. Spaces cause major probems for command-line compilers
+use standars  conventions for files in your project: .c .py .h
+Files create by your program should also have standard extensions
+
+BRANCHING
+(if if else if)
+Avoid single-line if statements: include {} in even the simplest statements in languages tat require it
+avoid ternary operators
+avoid boolean operators
+use if - else if for or
+use nested if for and
+LEARN the different types of aggregate variable types in your language (lists, tuples, arrays, dictionaries, etc) and use the rigght tool for the job at hand.
+
+LOOPS
+Use for loops for deterministic repetition: you know how many times something will happen before loop begins
+For loops (or foreach or iterators) are ideal for iterating through a listable data structure: use them when you can
+While loops are non deterministic: based on events or user input
+    while (keepGoing) {
+
+SINLGE PURPOSE FUNCTIONS
+A function should solve a very specific problem
+If it does more than one thing, consider making it more than one function
+Any repeated or complex behavior that can be named is good candinate for a function
+function should ideally be small enough to see all at once in your editor
+It should have a reasonable  (<10) number of local variables
+You should understand the function in your head at one time. (easier to get your head back to problem solving)
+
+THE POINT OF NO (OR ONE) return
+If a function does not return a value, it doesnt need an empty return statement
+Return should typically be the last line of a function
+in most cases a function can be rewritten to only need one return statement
+make variable change its value, and reurtn that variable
+recurison might be an exception
+
+ADVANCED FUNCTION TECHNIQUES CAN WAIT
+Inner functions, lambdas, and recusrion are fine techniques
+--- but only use them whne they improve your code.
+--- They can casue a lot of confusion if not used well
+Dont get fancy unless theres a good reason
+--there usuallt inst a good reason
+If a function gets too complex, consider a data driven solution
+Try to test a function in isolation befgore intergarting it
+
+CLASSES
+An object should have a meaingful name
+Every obecjt should have a constructor or equivalent
+----- Constructor should initialize all properties / attributes
+Properties should be private (or protected) if possible
+---- Use access modifires (getters and setters) to allow access to properties
+---- der using a property mechanism (java beans, pyhton property decorrator to make virtual properties
+Use multiple inheritance only when required: consider usning abstraction or aggregation instead
+Consider addding unit "tests" to your classes. They can be formal. or simly a function which tests all the features of the class
+
+USING A BUILD TOOL
+for beginner dont worry about htis
+You might be required to use make or another build tool
+Do NOT wait until the ned to build your make file. It should be continuously updated
+Your make fill will generally need a run target, You also may be required to have other targets.
+
+USING VERSION CONTROL
+Git or other version control is well worth learning
+Make frequent commits (each time you get up or solver a smaller problem)
+Consider making a branch whenever you have a runnable approximation of the code
+Do NOT wait until the project is done to commit
+Avoid using nested commits. Each project should be a single repo
+You may need to save the repo to specific nam so an automated system can find it
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PRACTICES
+======================
+
+Multiple exits
+- basic password loop
+- It exits with a positive result if th user chooses the right password
+- It exits wtih a negative result if the user is wrong three times
+- How will you code this loop
+
+Create a variable keypassword type string initvalue = '1234JohnDoe'
+Create a variable tries type int initvalue = 3
+Create a boolean continueloop initvalue = true
+Create a variable userguess type string
+While continueloop = true:
+  if tries = 0 set continueloop = "false" and say "run out of tries"
+  else
+  ask user for input and store it in userguess 
+  if userguess = keypassword
+  say "password correct"
+  set continueloop = false
+ 
+  else
+  tries - 1
+  say "password not correct"
+ 
+=======
+
+list of 10 numbers
+
+give 3rd highest number
+
+what if only 1 of 2 numbers which is highest
+
+create a variable x type int
+create a variable y type int
+create a variable inputmessage type string initval: type a number
+ask inputmessage and store value in x
+ask inputmessage and store value in y
+i
+myCurrentHighestNumber = 0
+for (i=0; i > 10 ; ++)
+numberfromlist = get next number from list
+if myCurrentHighestNumber < numberfromlist
+numberfromlist = myCurrentHighestNumber
+else
+
+=====
+create variable current1stplace int init 0
+create variable current2ndplace int init 0
+create variable current3rdplace int init 0
+create variable numberfromlist int init 0
+
+Begin with integer i that is 0 and add 1 to i on each pass until i is larger or equal to 10
+Read list and store value in numberfromlist
+if numberfromlist > current1stplace
+current3rdplace = current2ndplace
+current2ndplace = currents1stplace
+current1stplace = numberfromlist
+
+elseif numberfromlist > current2ndplace
+current3rdplace = current2ndplace
+current2ndplace = numberfromlist
+
+elseif numberfromlist is >current3rdplace
+current3rdplace = numberfromlist
+
+else
+ 
+ 
+  
