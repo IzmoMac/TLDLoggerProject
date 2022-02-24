@@ -36,6 +36,8 @@ Done - Database structure for all TLD items
 
 - Create a VIEW that shows your added inventory
 
+- Create a nice GUI
+
 - Create Todo tasklist app for planning
 
 - Create an overlay so you do not have to alt tab
