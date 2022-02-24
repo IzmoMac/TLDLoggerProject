@@ -11,20 +11,14 @@ namespace classExample
         static void Main(string[] args)
         {
             COutput cn = new COutput();
-            CMySqlConnection con = new CMySqlConnection();
+            CDatabase db = new CDatabase();
 
-            //con.TestSqlConnection();
-
-            //con.AskForProductName();
-
-            //cn.Write(con.productName);
-            //con.OpenSqlConnection();
             Boolean keepGoing = true;
             string input;
             while (keepGoing)
             {
-                con.AskForProductName();
-                con.QueryProductFromdb();
+                db.AskForProductName();
+                db.QueryProductFromdb();
                 Console.WriteLine("search again?");
                 input = Console.ReadLine();
                 if (input == "no")
