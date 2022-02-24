@@ -2,6 +2,7 @@
 
 The idea of this Project is to create Itemlogger for the game The Long Dark, its mainly for myselft and my learning journey to coding and the code c#
 
+DataStructure
 Se on sellainen tavaran kirjaud järjestelmä.
 Eli valitsen tavaran ja annansille ominaisuuksia (esim: päiväys, kunto)  ja kirjaan sen järjestelmään/databaseen
 Sitten se listaa kaikki tavarat mitä olen listannut
