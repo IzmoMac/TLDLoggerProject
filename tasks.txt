@@ -293,18 +293,28 @@ numberfromlist = get next number from list
 if myCurrentHighestNumber < numberfromlist
 numberfromlist = myCurrentHighestNumber
 else
-========
-1temp
-2temp
-3temp
-for (i=0; i > 10 ; ++)
-numberfromlist = get next number from list
-if myCurrentHighestNumber < numberfromlist
-numberfromlist = myCurrentHighestNumber
+
+=====
+create variable current1stplace int init 0
+create variable current2ndplace int init 0
+create variable current3rdplace int init 0
+create variable numberfromlist int init 0
+
+Begin with integer i that is 0 and add 1 to i on each pass until i is larger or equal to 10
+Read list and store value in numberfromlist
+if numberfromlist > current1stplace
+current3rdplace = current2ndplace
+current2ndplace = currents1stplace
+current1stplace = numberfromlist
+
+elseif numberfromlist > current2ndplace
+current3rdplace = current2ndplace
+current2ndplace = numberfromlist
+
+elseif numberfromlist is >current3rdplace
+current3rdplace = numberfromlist
+
 else
-
-
-
  
  
   
