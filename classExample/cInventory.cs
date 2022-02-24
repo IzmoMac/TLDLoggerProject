@@ -15,15 +15,17 @@ namespace classExample
         string Place;
         public CInventory(string aProductName,string aRegion, float aCondition, int aDaystored, string aPlace)
         {
-            //Place checks to everything is correct format?
+            //NEEDS: Place checks to check that everything is correct format?
             ProductName = aProductName;
             Region = aRegion;
             Condition = aCondition;
             DayStored = aDaystored;
             Place = aPlace;
+        }
+        public void InventoryAdd()
+        {
 
         }
-
     
 }
 }
