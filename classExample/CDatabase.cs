@@ -61,19 +61,131 @@ namespace classExample
         private string database = "loggerTLD";
         private Boolean trustedConnection = true;
         private int returnValue;
+        private Boolean ErrorOccurred;
+
+        // Initializes connectionString and sets it. Also resets other values so they are not left hanging and used accidentaly
+        /*
+         *          THIS IS TEST 'EMOVE 'TIMEOUT=2' ON LINE             connectionString = $"address={address};database={database};Trusted_Connection={trustedConnection};timeout=2";
+         */
         public CDatabase()
         {
-            connectionString = $"address={address};database={database};Trusted_Connection={trustedConnection}";
+            connectionString = $"address={address};database={database};Trusted_Connection={trustedConnection};timeout=2";
             connection.ConnectionString = connectionString;
             queryString = "";
+            returnValue = 0;
+            ErrorOccurred = false;
         }
+        //Self Explanatory, Opens Sql Connection...
         public void OpenSqlConnection()
         {
-            connection.Open();
+            try
+            {
+                Console.WriteLine("Connecting to Database...");
+                Console.SetCursorPosition(0, Console.CursorTop - 1);
+                Console.WriteLine("                         ");
+                Console.SetCursorPosition(0, Console.CursorTop - 1);
+                connection.Open();
+            }
+            catch (Exception ex)
+            {
+                CloseSqlConnection();
+                throw;
+            }
         }
+        //Self Explanatory, Closes Sql Connection...
         public void CloseSqlConnection()
         {
             connection.Close();    
+        }
+        //
+        // 
+        //Calls and creates sqlcommand object cmd
+        //Calls SqlDataReader on SqlCommand
+        //Returns ProductKey as Int
+        public int tGetProductKeyFromProductNameFromDatabase(string _productName)
+        {
+            queryString = $"select ProductKey from tProduct where ProductName = '{_productName}';";
+            OpenSqlConnection();
+            SqlCommand cmd = new SqlCommand(queryString, connection);
+            var result = cmd.ExecuteScalar();
+                if (result == null)
+                {
+                    Console.WriteLine("No Product Found, Check your Product Name");
+                }
+                else
+                {
+                    returnValue = int.Parse(result.ToString());
+                    Console.WriteLine("ProductKeyFound ");
+                }
+                cmd.Dispose();
+                CloseSqlConnection();
+                return returnValue;
+
+        }
+        public void TryQueryForAnyKey()
+        {
+            OpenSqlConnection();
+            SqlCommand cmd = new SqlCommand(queryString, connection);
+            try
+            {
+                var result = cmd.ExecuteReader();
+                if (result == null)
+                {
+                    Console.WriteLine("No Product Found, Check your Product Name");
+                }
+                else
+                {
+                    returnValue = int.Parse(result.ToString());
+                    Console.WriteLine("ProductKeyFound");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                cmd.Dispose ();
+                CloseSqlConnection ();
+            }
+        }
+        public int tGetProductKeyFromName(string _productName)
+        {
+            try
+            {
+                queryString = $"select ProductKey from tProduct where ProductName = '{_productName}';";
+                TryQueryForAnyKey();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                Console.WriteLine("Ottikiinnni tgpkf");
+                Console.WriteLine(ex.Message);
+                returnValue = 0;
+            }
+            return returnValue;
+
+        }
+        public int ManualQueryForProductKey()
+        {
+            OpenSqlConnection();
+            QueryInt();
+            SqlCommand cmd = new SqlCommand(queryString, connection);
+            SqlDataReader reader = cmd.ExecuteReader();
+            int i = reader.FieldCount;
+            while (reader.Read())
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    returnValue = (int)reader[j];
+                }
+            }
+            //cn.Write("No product found");
+
+            reader.Close();
+            cmd.Dispose();
+            CloseSqlConnection();
+            return returnValue;
+
         }
         public void QueryInt()
         {

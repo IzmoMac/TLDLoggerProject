@@ -19,8 +19,10 @@ namespace classExample
             //new CInventory("cloth", "mystery lake", 100, 1, "hunters cabin").AddItem();
             //db.DeleteAllClothFromInventory();
 
-            ci.AddProductToInventory();
-            db.ViewInventory();
+            //ci.AddProductToInventory();
+            //db.ViewInventory();
+            //db.OpenSqlConnection();
+            db.tGetProductKeyFromProductNameFromDatabase("Cloth");
         }
     }
 }
