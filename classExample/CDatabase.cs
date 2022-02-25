@@ -54,14 +54,24 @@ namespace classExample
     class CDatabase
     {
         SqlConnection connection = new SqlConnection();
-
+        COutput cn = new COutput();
+        //CInventory inventory = new CInventory();
         private string connectionString { get; set; }
         public string queryString { get; set; }
         private string address = "IZMO-PC-1EO7KE1\\SQLEXPRESS";
         private string database = "loggerTLD";
-        private Boolean trustedConnection = true;
+        private bool trustedConnection = true;
         private int returnValue;
-        private Boolean ErrorOccurred;
+        private bool ErrorOccurred;
+
+        private string productName;
+        private int productKey;
+        private bool keepGoing;
+        static string[] arrayGetProductKey = { "ProductKey", "tProduct", "ProductName" };
+        private string askmsg;
+        private string errormsg;
+        private string correctmsg;
+
 
         // Initializes connectionString and sets it. Also resets other values so they are not left hanging and used accidentaly
         /*
@@ -76,7 +86,7 @@ namespace classExample
             ErrorOccurred = false;
         }
         //Self Explanatory, Opens Sql Connection...
-        public void OpenSqlConnection()
+        private void OpenConnetion()
         {
             try
             {
@@ -88,43 +98,118 @@ namespace classExample
             }
             catch (Exception ex)
             {
-                CloseSqlConnection();
+                CloseConnection();
                 throw;
             }
         }
         //Self Explanatory, Closes Sql Connection...
-        public void CloseSqlConnection()
+        private void CloseConnection()
         {
             connection.Close();    
         }
-        //
-        // 
-        //Calls and creates sqlcommand object cmd
-        //Calls SqlDataReader on SqlCommand
-        //Returns ProductKey as Int
-        public int tGetProductKeyFromProductNameFromDatabase(string _productName)
+        private void CompdileQueryString()
+        {
+
+        }
+        private void CompileQueryString(string[] a,string Condition)
+        {
+            queryString = $"SELECT \"{a[0]}\" FROM \"{a[1]}\" WHERE \"{a[2]}\" = '{Condition}';";
+
+        }
+        public void ttGetProductKey()
+        {
+            askmsg = "What is product name?";
+            errormsg = "Given Product Name not valid.";
+            correctmsg = "Product is Valid";
+            keepGoing = true;
+            while (keepGoing)
+            {
+                cn.Write(askmsg);
+                productName = Console.ReadLine();
+                CompileQueryString(arrayGetProductKey, productName);
+                QuerySingleKey(productName);
+                
+            }
+            Console.WriteLine(productKey);
+        }
+        public void ttGetProductKey()
+        {
+            askmsg = "What is product name?";
+            errormsg = "Given Product Name not valid.";
+            correctmsg = "Product is Valid";
+            keepGoing = true;
+            while (keepGoing)
+            {
+                cn.Write(askmsg);
+                productName = Console.ReadLine();
+                CompileQueryString(arrayGetProductKey, productName);
+                QuerySingleKey(productName);
+
+            }
+            Console.WriteLine(productKey);
+        }
+        private void QuerySingleKey(string s)
+        {
+            OpenConnetion();
+            SqlCommand cmd = new SqlCommand(queryString, connection);
+            var result = cmd.ExecuteScalar();
+            if (result == null)
+            {
+                cn.Write($"{errormsg} ({productName})");
+            }
+            else
+            {
+                productKey = int.Parse(result.ToString());
+                cn.Write(correctmsg);
+                keepGoing = false;
+            }
+            cmd.Dispose();
+            CloseConnection();
+        }
+
+        public void tGetProductKey(string _productName)
         {
             queryString = $"select ProductKey from tProduct where ProductName = '{_productName}';";
-            OpenSqlConnection();
+            OpenConnetion();
             SqlCommand cmd = new SqlCommand(queryString, connection);
             var result = cmd.ExecuteScalar();
                 if (result == null)
                 {
-                    Console.WriteLine("No Product Found, Check your Product Name");
+                    Console.WriteLine($"Given Product Name not valid. ({_productName})");
                 }
                 else
                 {
-                    returnValue = int.Parse(result.ToString());
-                    Console.WriteLine("ProductKeyFound ");
+                    productKey = int.Parse(result.ToString());
+                    Console.WriteLine("Product is Valid");
+                    keepGoing = false;
                 }
                 cmd.Dispose();
-                CloseSqlConnection();
-                return returnValue;
+                CloseConnection();
+        }
+        public void notoworkingAddProductToInventory()
+        { //This funcntion is underconsrtuction
+            /* What this function(algorithm) needs to do?
+             
+             * Ask for ProductName and Store it in variable productName (this makes seperate function)
+             
+             * Ask database for corresponding ProductKey and return productKey 
+             * If key not found in database, go to behinning
+             */
+            keepGoing = true;
+            while (keepGoing)
+            {
+                cn.Write("What is product name?");
+                productName = Console.ReadLine();
+                tGetProductKey(productName);
+            }
+            Console.WriteLine(productKey);
+
+
 
         }
         public void TryQueryForAnyKey()
         {
-            OpenSqlConnection();
+            OpenConnetion();
             SqlCommand cmd = new SqlCommand(queryString, connection);
             try
             {
@@ -146,7 +231,7 @@ namespace classExample
             finally
             {
                 cmd.Dispose ();
-                CloseSqlConnection ();
+                CloseConnection ();
             }
         }
         public int tGetProductKeyFromName(string _productName)
@@ -167,7 +252,7 @@ namespace classExample
         }
         public int ManualQueryForProductKey()
         {
-            OpenSqlConnection();
+            OpenConnetion();
             QueryInt();
             SqlCommand cmd = new SqlCommand(queryString, connection);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -183,7 +268,7 @@ namespace classExample
 
             reader.Close();
             cmd.Dispose();
-            CloseSqlConnection();
+            CloseConnection();
             return returnValue;
 
         }
@@ -220,24 +305,25 @@ namespace classExample
         }
         public void NonQuery()
         {
-            OpenSqlConnection();
+            OpenConnetion();
             SqlCommand cmd = new SqlCommand(queryString, connection);
             int rowsAdded = cmd.ExecuteNonQuery();
             Console.WriteLine($"{rowsAdded} rows added");
-            CloseSqlConnection();
+            cmd.Dispose();
+            CloseConnection();
         }
         public int QueryKey()
         {
-            OpenSqlConnection();
+            OpenConnetion();
             QueryInt();
-            CloseSqlConnection();
+            CloseConnection();
             return returnValue;
         }
         public void QueryView()
         {
-            OpenSqlConnection();
+            OpenConnetion();
             Query();
-            CloseSqlConnection ();
+            CloseConnection();
         }
         public void ViewInventory()
         {
