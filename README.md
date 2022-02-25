@@ -41,3 +41,14 @@ Done - Database structure for all TLD items
 - Create Todo tasklist app for planning
 
 - Create an overlay so you do not have to alt tab
+
+- Sql quering system beta 001 working it needs:
+  comments
+  cleaning up code
+  checks to see if data is valid
+  exeption catchers
+
+- inventory view beta 001 id done as well, work needs:
+  comments
+  nice gui
+  specified method for displaying vInventory
