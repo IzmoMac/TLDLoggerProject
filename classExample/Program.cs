@@ -21,13 +21,14 @@ namespace classExample
             //db.DeleteAllClothFromInventory();
 
             //inventory.notoworkingAddProductToInventory();
-            //db.notoworkingAddProductToInventory();
-            db.ttGetProductKey();
+            //inventory.notoworkingAddProductToInventory();
+            //db.GetProductKey();
+            //db.GetRegionKey();
             //db.ttGetProductKey();
             //db.ViewInventory();
             //db.OpenSqlConnection();
-            //db.tGetProductKey("Cloth");
-
+            //db.GetCondition();
+            db.GetDayStored();
 
         }
     }
