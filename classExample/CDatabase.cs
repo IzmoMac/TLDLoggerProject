@@ -192,15 +192,17 @@ namespace classExample
             CloseConnection();
             return returnValue;
         }
+        //public void GetCondition(string tempCondition)
         public void GetCondition()
-        {
+        { 
             askmsg = "How much condition left?";
             errormsg = "Give a valid condition amount";
             string errormsg2 = "Condition cannot be higher than 100";
             string errormsg3 = "Condition cannot be lower than 0";
             correctmsg = "Valid condition amount";
-            string tempCondition = "";
-            //double con;
+
+            string tempCondition;
+
             keepGoing = true;
             while (keepGoing)
             {
