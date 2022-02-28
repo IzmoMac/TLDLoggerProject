@@ -80,11 +80,17 @@
     <Compile Include="COutput.cs" />
     <Compile Include="CInventory.cs" />
     <Compile Include="CProduct.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="form_addItem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="form_addItem.Designer.cs">
+      <DependentUpon>form_addItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="from_navigation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="from_navigation.Designer.cs">
+      <DependentUpon>from_navigation.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,8 +100,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="form_addItem.resx">
+      <DependentUpon>form_addItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="from_navigation.resx">
+      <DependentUpon>from_navigation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

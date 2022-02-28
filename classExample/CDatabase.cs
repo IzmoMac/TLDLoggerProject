@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Collections;
 
 /* Kommentteja
 Aloitetaan siitä että:
@@ -55,14 +56,14 @@ namespace classExample
     {
         SqlConnection connection = new SqlConnection();
         COutput cn = new COutput();
-        //CInventory inventory = new CInventory();
         private string connectionString { get; set; }
         public string queryString { get; set; }
         private string address = "IZMO-PC-1EO7KE1\\SQLEXPRESS";
         private string database = "loggerTLD";
         private bool trustedConnection = true;
-        //private int returnValue;
-        private bool ErrorOccurred;
+
+        public string finalInsertString;
+        List<string> insertString = new List<string>();
 
         public string productName;
         private int productKey;
@@ -73,25 +74,27 @@ namespace classExample
         static string[] arrayGetRegionKey = { "RegionKey", "tRegion", "RegionName" };
 
         public double condition;
-
-        public int dayStored;
+        public int quantity;
 
         private bool keepGoing;
+
         private string askmsg;
         private string errormsg;
-        private string correctmsg;
+        private string errormsg2;
+        private string correctmsg = "Success";
+
 
 
         // Initializes connectionString and sets it. Also resets other values so they are not left hanging and used accidentaly
         /*
-         *          THIS IS TEST 'EMOVE 'TIMEOUT=2' ON LINE             connectionString = $"address={address};database={database};Trusted_Connection={trustedConnection};timeout=2";
+         *         // THIS IS TEST REMOVE 'TIMEOUT=2' ON LINE             connectionString = $"address={address};database={database};Trusted_Connection={trustedConnection};timeout=2";
          */
         public CDatabase()
         {
             connectionString = $"address={address};database={database};Trusted_Connection={trustedConnection};timeout=2";
             connection.ConnectionString = connectionString;
             queryString = "";
-            ErrorOccurred = false;
+            insertString.Clear();
         }
         public void AddItem()
         {
@@ -99,6 +102,7 @@ namespace classExample
             GetRegionKey();
 
         }
+
         //Self Explanatory, Opens Sql Connection...
         private void OpenConnetion()
         {
@@ -116,23 +120,21 @@ namespace classExample
                 throw;
             }
         }
+
         //Self Explanatory, Closes Sql Connection...
         private void CloseConnection()
         {
             connection.Close();    
         }
-        private void CompdileQueryString()
-        {
 
-        }
         // Compiles SELECT QueryString based on given inputs
         private void CompileQueryString(string[] a,string Condition)
         {
             queryString = $"SELECT \"{a[0]}\" FROM \"{a[1]}\" WHERE \"{a[2]}\" = '{Condition}';";
 
         }
-        /* Asks User for ProductName and sets ProductKey to corresponding ProductKey
-         */
+
+        // Asks User for ProductName and sets ProductKey to corresponding ProductKey
         public int GetProductKey()
         {
             askmsg = "What is product name?";
@@ -151,27 +153,7 @@ namespace classExample
             productKey = int.Parse(tempProductKey);
             return productKey;
         }
-        /* Asks User for RegionName and sets RegionKey to corresponding RegionName
-         */
-        public int GetRegionKey()
-        {
-            askmsg = "What is Region name?";
-            errormsg = "Given Region do not exist.";
-            correctmsg = "Region is Valid";
-            string tempRegionKey = "";
-            keepGoing = true;
-            while (keepGoing)
-            {
-                cn.Write(askmsg);
-                regionName = Console.ReadLine();
-                CompileQueryString(arrayGetRegionKey, regionName);
-                tempRegionKey = QuerySingleKey(regionName);
 
-            }
-
-            regionKey = int.Parse(tempRegionKey);
-            return regionKey;
-        }
         private string QuerySingleKey(string input)
         {
             string returnValue = "";
@@ -192,18 +174,39 @@ namespace classExample
             CloseConnection();
             return returnValue;
         }
-        //public void GetCondition(string tempCondition)
-        public void GetCondition()
+        
+        //Asks User for RegionName and sets RegionKey to corresponding RegionName
+        public int GetRegionKey()
+        {
+            askmsg = "What is Region name?";
+            errormsg = "Given Region do not exist.";
+            correctmsg = "Region is Valid";
+            string tempRegionKey = "";
+            keepGoing = true;
+            while (keepGoing)
+            {
+                cn.Write(askmsg);
+                regionName = Console.ReadLine();
+                CompileQueryString(arrayGetRegionKey, regionName);
+                tempRegionKey = QuerySingleKey(regionName);
+
+            }
+
+            regionKey = int.Parse(tempRegionKey);
+            return regionKey;
+        }
+
+        public double GetCondition()
         { 
             askmsg = "How much condition left?";
             errormsg = "Give a valid condition amount";
-            string errormsg2 = "Condition cannot be higher than 100";
+            errormsg2 = "Condition cannot be higher than 100";
             string errormsg3 = "Condition cannot be lower than 0";
             correctmsg = "Valid condition amount";
 
             string tempCondition;
 
-            keepGoing = true;
+            bool keepGoing = true;
             while (keepGoing)
             {
                 cn.Write(askmsg);
@@ -230,24 +233,34 @@ namespace classExample
                 }
             }
             condition = Math.Round(condition, 3);
+            return condition;
         }
-        public void GetDayStored()
+        public int GetDayStored()
         {
             askmsg = "Which day stored?";
+            errormsg2 = "Day cannot be lower than 1";
+            return GetInt(); 
+        }
+        public int GetQuantity()
+        {
+            askmsg = "How many of current product?";
+            errormsg2 = "Quantity cannot be lower than 1";
+            return GetInt();
+        }
+        public int GetInt()
+        {
             errormsg = "Give a valid number";
-            string errormsg2 = "Day cannot be lower than 0";
-            correctmsg = "Valid condition amount";
-            string tempDayStored = "";
-            //double con;
-            keepGoing = true;
+            string tempInt;
+            int returnValue = -1;
+            bool keepGoing = true;
             while (keepGoing)
             {
                 cn.Write(askmsg);
-                tempDayStored = Console.ReadLine();
+                tempInt = Console.ReadLine();
                 try
                 {
-                    dayStored = int.Parse(tempDayStored);
-                    if (dayStored < 0)
+                    returnValue = int.Parse(tempInt);
+                    if (returnValue < 1)
                     {
                         cn.Write(errormsg2);
                     }
@@ -261,144 +274,132 @@ namespace classExample
                     cn.Write(errormsg);
                 }
             }
-            
+            return returnValue;
         }
 
-
-
-
-
-
-
-
-
-
-        public void tGetProductKey(string _productName)
+        //This is temporary solution, I need to map all the Places in game and name them and then we can add them to 
+        public string GetPlace()
         {
-            queryString = $"select ProductKey from tProduct where ProductName = '{_productName}';";
-            OpenConnetion();
-            SqlCommand cmd = new SqlCommand(queryString, connection);
-            var result = cmd.ExecuteScalar();
-                if (result == null)
-                {
-                    Console.WriteLine($"Given Product Name not valid. ({_productName})");
-                }
-                else
-                {
-                    productKey = int.Parse(result.ToString());
-                    Console.WriteLine("Product is Valid");
-                    keepGoing = false;
-                }
-                cmd.Dispose();
-                CloseConnection();
-        }
-        public void dnotoworkingAddProductToInventory()
-        { //This funcntion is underconsrtuction
-            /* What this function(algorithm) needs to do?
-             
-             * Ask for ProductName and Store it in variable productName (this makes seperate function)
-             
-             * Ask database for corresponding ProductKey and return productKey 
-             * If key not found in database, go to behinning
-             */
-            keepGoing = true;
+            askmsg = "Where is it stored? (Detailed description allowed)";
+            errormsg = "Cannot be empty";
+            errormsg2 = "Has to be under 50 characters";
+            correctmsg = "Valid";
+            string place = "";
+            bool keepGoing = true;
             while (keepGoing)
             {
-                cn.Write("What is product name?");
-                productName = Console.ReadLine();
-                tGetProductKey(productName);
-            }
-            Console.WriteLine(productKey);
-
-
-
-        }
-        public void TryQueryForAnyKey()
-        {
-            int returnValue; //this is temporary, probabpy just delete whole function
-            OpenConnetion();
-            SqlCommand cmd = new SqlCommand(queryString, connection);
-            try
-            {
-                var result = cmd.ExecuteReader();
-                if (result == null)
+                cn.Write(askmsg);
+                place = Console.ReadLine();
+                if(place.Length < 1)
                 {
-                    Console.WriteLine("No Product Found, Check your Product Name");
+                    cn.Write(errormsg);
+                }
+                else if(place.Length > 50)
+                {
+                    cn.Write(errormsg2);
                 }
                 else
                 {
-                    returnValue = int.Parse(result.ToString());
-                    Console.WriteLine("ProductKeyFound");
+                    keepGoing= false;
                 }
             }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            finally
-            {
-                cmd.Dispose ();
-                CloseConnection ();
-            }
+            return place;
         }
-        public int tGetProductKeyFromName(string _productName)
+        public bool OneConditionForAll()
         {
-            int returnValue = 0; //this is temporary, probabpy just delete whole function
-
-            try
-            {
-                queryString = $"select ProductKey from tProduct where ProductName = '{_productName}';";
-                TryQueryForAnyKey();
-            }
-            catch (System.Data.SqlClient.SqlException ex)
-            {
-                Console.WriteLine("Ottikiinnni tgpkf");
-                Console.WriteLine(ex.Message);
-                returnValue = 0;
-            }
-            return returnValue;
-
+            return GetBool();
         }
-        public int ManualQueryForProductKey()
+        public bool GetBool()
         {
-            int returnValue = 0; //this is temporary, probabpy just delete whole function
-
-            OpenConnetion();
-            QueryInt();
-            SqlCommand cmd = new SqlCommand(queryString, connection);
-            SqlDataReader reader = cmd.ExecuteReader();
-            int i = reader.FieldCount;
-            while (reader.Read())
+            askmsg = "Do all the items have same condition?";
+            errormsg = "Please type Yes or No";
+            correctmsg = "Valid";
+            string tempAnswer = "";
+            bool answer = true;
+            bool keepGoing = true;
+            while (keepGoing)
             {
-                for (int j = 0; j < i; j++)
+                cn.Write(askmsg);
+                tempAnswer = Console.ReadLine();
+                if (tempAnswer == "Yes")
                 {
-                    returnValue = (int)reader[j];
+                    keepGoing = false;
+                }
+                else if (tempAnswer == "No")
+                {
+                    keepGoing = false;
+                    answer = false;
+                }
+                else
+                {
+                    cn.Write(errormsg);
                 }
             }
-            //cn.Write("No product found");
-
-            reader.Close();
-            cmd.Dispose();
-            CloseConnection();
-            return returnValue;
-
+            return answer;
         }
-        public void QueryInt()
-        {
-            int returnValue; //this is temporary, probabpy just delete whole function
 
-            SqlCommand cmd = new SqlCommand(queryString, connection);
-            SqlDataReader reader = cmd.ExecuteReader();
-            int i = reader.FieldCount;
-                while (reader.Read())
+        public void CreateNewProduct()
+        {
+            //It creates it in this class for later use. (For example we can ask to check if informartion is correct?)
+            CProduct p = new CProduct(GetProductKey(), productName, GetRegionKey(), regionName, GetDayStored(), GetPlace());
+
+            quantity = GetQuantity();
+            
+            bool oneForAll = false; //Herjaa jos ei anna value...
+            bool questionAsked = false; 
+            bool keepGoing = true;
+            while (keepGoing)
+            {
+                if (quantity > 1)
                 {
-                    for (int j = 0; j < i; j++)
+                    // If question is not ask, asks a question once.
+                    if (!questionAsked)
                     {
-                        returnValue = (int)reader[j];
+                        oneForAll = OneConditionForAll();
+                        questionAsked = true;
+                    }
+                    if (oneForAll == false)
+                    {
+                        condition = GetCondition();
+                        insertString.Add($"INSERT INTO tInventory VALUES (GETDATE(),GETDATE(),1,'{p.productKey}','{p.regionKey}','{condition}','{p.dayStored}','{p.place}','1');"); //Tähän voi olla parempi ratkaisu, mieti
+                        quantity--;
+                    }
+                    else
+                    {
+                        keepGoing=false;
                     }
                 }
-                //cn.Write("No product found");
-                reader.Close();
+                else
+                {
+                    keepGoing = false;
+                }
+                condition = GetCondition();
+                insertString.Add($"INSERT INTO tInventory VALUES (GETDATE(),GETDATE(),1,'{p.productKey}','{p.regionKey}','{condition}','{p.dayStored}','{p.place}','{quantity}');"); //Tähän voi olla parempi ratkaisu, mieti
+            }
+            finalInsertString = String.Join(" ", insertString);
+            //Clears insertString list
+            insertString.Clear();
+            NonQuery();
+        }
+
+        //Exectues a non query string to database
+        public void NonQuery()
+        {
+            OpenConnetion();
+            SqlCommand cmd = new SqlCommand(finalInsertString, connection);
+            int rowsAdded = cmd.ExecuteNonQuery();
+            Console.WriteLine($"{rowsAdded} rows added");
+            cmd.Dispose();
+            CloseConnection();
+        }
+
+
+
+        public void QueryView()
+        {
+            OpenConnetion();
+            Query();
+            CloseConnection();
         }
         public void Query()
         {
@@ -416,56 +417,13 @@ namespace classExample
             //cn.Write("No product found");
             reader.Close();
         }
-        public void NonQuery()
-        {
-            OpenConnetion();
-            SqlCommand cmd = new SqlCommand(queryString, connection);
-            int rowsAdded = cmd.ExecuteNonQuery();
-            Console.WriteLine($"{rowsAdded} rows added");
-            cmd.Dispose();
-            CloseConnection();
-        }
-        public int QueryKey()
-        {
-            int returnValue = 0; //this is temporary, probabpy just delete whole function
 
-            OpenConnetion();
-            QueryInt();
-            CloseConnection();
-            return returnValue;
-        }
-        public void QueryView()
-        {
-            OpenConnetion();
-            Query();
-            CloseConnection();
-        }
         public void ViewInventory()
         {
             queryString = "SELECT * FROM vInventory";
             QueryView();
-        }
-        public void DeleteAllClothFromInventory()
-        {
-            queryString = "delete from tInventory where ProductKey = 50";
-            NonQuery();
-        }
-        public void InsertToInventory(int productKey, int regionKey, double condition, int dayStored, string place)
-        {
-            queryString = $"INSERT INTO tInventory VALUES (GETDATE(),GETDATE(),1,'{productKey}','{regionKey}','{condition}','{dayStored}','{place}');";
-            NonQuery();
-        }
-        public int GetProductKeyFromName(string _productName)
-        {
-            queryString = $"select ProductKey from tProduct where ProductName = '{_productName}';";
-            return QueryKey();
-        }
-        public int GetRegionKeyFromName(string _regionName)
-        {
-            queryString = $"select RegionKey from tRegion where RegionName = '{_regionName}';";
-            return QueryKey();
-        }
-       
+        }       
+        
     }
 }
 

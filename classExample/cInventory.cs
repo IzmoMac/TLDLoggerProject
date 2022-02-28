@@ -19,18 +19,6 @@ namespace classExample
         private int productKey;
         private int regionKey;
 
-        public void notworkingaswantedConstructor(string aProductname,string aRegion, double aCondition, int aDaystored, string aPlace)
-        {
-            //NEEDS: Place checks to check that everything is correct format?
-            productName = aProductname;
-            //This has to return valid product key, now it does not, same for region key, also if invalid do exepction handler/cathers
-            productKey = db.GetProductKeyFromName(productName);
-            region = aRegion;
-            regionKey = db.GetRegionKeyFromName(region);
-            condition = aCondition;
-            dayStored = aDaystored;
-            place = aPlace;
-        }
         public void notoworkingAddProductToInventory()
         { //This funcntion is underconsrtuction
             /* What this function needs to do?
@@ -55,16 +43,6 @@ namespace classExample
             place = aPlace;
 
             Console.Write("Is the information corret? ");
-        db.InsertToInventory(productKey, regionKey, condition, dayStored, place);
         }
-
-        //public void Product(int aproductKey, string aproductName, int aregionKey, string aregionName, double acondition, int adayStored, string aplace)
-        //{
-        //Product(productKey, productName, regionKey, regionName, condition, dayStored, place);
-        //}
-        //public void tWriteALlVariables()
-        //{
-        //    Console.WriteLine($"{productName} +ProductKey {productKey} + {region} +RegionKey {regionKey} + {condition} + {dayStored} + {place}");
-        //}
     }
 }

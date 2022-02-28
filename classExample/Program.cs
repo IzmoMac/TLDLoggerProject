@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace classExample
 {
     class Program
     {
         private const int cWait = 3000; //milliseconds
+        [STAThread]
         static void Main(string[] args)
         {
             COutput cn = new COutput();
@@ -28,7 +30,28 @@ namespace classExample
             //db.ViewInventory();
             //db.OpenSqlConnection();
             //db.GetCondition();
-            db.GetDayStored();
+            //Console.WriteLine(db.GetDayStored());
+            //Console.WriteLine(db.GetBool());
+
+            db.CreateNewProduct();
+            db.ViewInventory();
+
+            //Console.WriteLine(CProduct().test);
+
+            //Console.WriteLine(db.GetProductKey());
+            //Console.WriteLine(db.GetRegionKey());
+            //Console.WriteLine(db.GetCondition());
+            //Console.WriteLine(db.GetDayStored());
+            //Console.WriteLine(db.GetPlace());
+            bool testbool1 = false;
+            if(testbool1 == true)
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new form_addItem());
+            }
+       
+            
 
         }
     }

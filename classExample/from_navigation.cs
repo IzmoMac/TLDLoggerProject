@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace classExample
 {
-    public partial class Form1 : Form
+    public partial class form_navigation : Form
     {
-        public Form1()
+        public form_navigation()
         {
             InitializeComponent();
         }
@@ -23,6 +23,16 @@ namespace classExample
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void form_navigation_Load(object sender, EventArgs e)
         {
 
         }
