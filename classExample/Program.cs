@@ -15,6 +15,7 @@ namespace classExample
             CDatabase db = new CDatabase();
             CInput ci = new CInput();
             CInventory inventory = new CInventory();
+            CProduct p = new CProduct();
             //CInventory ci = new CInventory();
             //CInventory p1 = new CInventory("Fork", 3339.1435443);
             //Console.WriteLine(db.GetProductKey("cloth"));
@@ -33,9 +34,9 @@ namespace classExample
             //Console.WriteLine(db.GetDayStored());
             //Console.WriteLine(db.GetBool());
 
-            db.CreateNewProduct();
-            db.ViewInventory();
-
+            //db.CreateNewProduct();
+            //p.CreateNewProduct();
+            p.ViewInventory();
             //Console.WriteLine(CProduct().test);
 
             //Console.WriteLine(db.GetProductKey());

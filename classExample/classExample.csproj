@@ -80,6 +80,10 @@
     <Compile Include="COutput.cs" />
     <Compile Include="CInventory.cs" />
     <Compile Include="CProduct.cs" />
+    <Compile Include="CtChar.cs" />
+    <Compile Include="CtDec.cs" />
+    <Compile Include="CtInt.cs" />
+    <Compile Include="CtStr.cs" />
     <Compile Include="form_addItem.cs">
       <SubType>Form</SubType>
     </Compile>
