@@ -87,10 +87,10 @@ namespace classExample
             string msg = "Connecting to Database...";
             try
             {
-                Console.WriteLine(msg);
-                SetPos();
-                Console.WriteLine(new String(CtChar.SPACE, msg.Length));
-                SetPos();
+                //Console.WriteLine(msg);
+                //SetPos();
+                //Console.WriteLine(new String(CtChar.SPACE, msg.Length));
+                //SetPos();
                 connection.Open();
             }
             catch (Exception ex)
@@ -178,8 +178,8 @@ namespace classExample
             if (!OpenConnection()) { return; }
 
             SqlCommand cmd = new SqlCommand(finalInsertString, connection);
-            int rowsAdded = cmd.ExecuteNonQuery();
-            Console.WriteLine($"{rowsAdded} rows added");
+            cmd.ExecuteNonQuery();
+            //Console.WriteLine($"{rowsAdded} rows added");
             cmd.Dispose();
             CloseConnection();
         }

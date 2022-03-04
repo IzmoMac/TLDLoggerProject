@@ -49,12 +49,12 @@ namespace classExample
             CProduct p = new CProduct()
             {
                 ProductName = textBox_productName.Text,
-                DayStored = int.Parse(textBox_dayStored.Text), //Muuta samalla tavalla kuin p.SetCondition
                 RegionName = textBox_regionName.Text,
                 PlaceName = textBox_place.Text,
-                Quantity = int.Parse(textBox_quantity.Text) //Muuta samalla tavalla kuin p.SetCondition
             };
             p.SetCondition(textBox_condition.Text);
+            p.SetDayStored(textBox_dayStored.Text);
+            p.SetQuantity(textBox_quantity.Text);
 
             if (!ValidateInput(p))
             {
@@ -83,41 +83,55 @@ namespace classExample
         private bool ValidateInput(CProduct p)
         {
             StringBuilder sb = new StringBuilder();
+            p.Verify();
+
+            if (!p.IsProductKeyValid)
+            {
+                sb.AppendLine("Given Product do not exist.");
+            }
 
             if (p.ConditionTooBig)
             {
-                sb.AppendLine("Condition value too big.");
+                sb.AppendLine($"Condition value cannot be bigger than {CtInt.PRCT_MAX}");
             }
             if (p.ConditionTooSmall)
             {
-                sb.AppendLine("Condition value too small.");
+                sb.AppendLine($"Condition value has to be {CtInt.INT_1} or higher");
             }
-
-            //jatkaa tähän muita chekkejä
-
-            p.Verify();
-            if (!p.IsProductKeyValid)
+            if (p.DayStoredTooBig)
             {
-                sb.AppendLine("Given Product name not valid.");
+                sb.AppendLine($"Day stored cannot be bigger than {CtInt.DAY_MAX}.");
             }
+            if (p.DayStoredTooSmall)
+            {
+                sb.AppendLine($"Day stored have to be {CtInt.DAY_MIN} or higher.");
+            }
+
             if (!p.IsRegionKeyValid)
             {
                 sb.AppendLine("Given Region do not exist.");
             }
+
             if (!p.IsPlaceKeyValid)
             {
-                sb.AppendLine("Given Place name do not exist.");
+                sb.AppendLine("Given Place do not exist.");
             }
 
+            if (p.QuantityTooBig)
+            {
+                sb.AppendLine($"Quantity cannot be bigger than {CtInt.QTY_MAX}.");
+            }
+            if (p.QuantityTooSmall)
+            {
+                sb.AppendLine($"Quantity have to be {CtInt.QTY_MIN} or higher.");
+            }
+            //jatkaa tähän muita chekkejä
+            
             if (sb.Length > CtInt.ZERO)
             {
                 MessageBox.Show(sb.ToString());
                 return false;
             }
-            return true;
-        }
-        public bool ValidateCondition()
-        {
             return true;
         }
     }

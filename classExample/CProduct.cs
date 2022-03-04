@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,8 +24,12 @@ namespace classExample
         static string[] arrayGetRegionKey = { "RegionKey", "tRegion", "RegionName" };
         static string[] arrayGetPlaceKey = { "PlaceKey", "tPlace", "PlaceName" };
 
+        NumberStyles Style;
+        CultureInfo Culture;
+        string Specifier = "G";
         public CProduct()
         {
+            
 
         }
         private void GetProductKey()
@@ -43,7 +48,7 @@ namespace classExample
         }
         public bool IsRegionKeyValid
         {
-            get { return RegionKey > CtInt.ZERO;}
+            get { return RegionKey > CtInt.ZERO; }
         }
         private void GetPlaceKey()
         {
@@ -52,7 +57,7 @@ namespace classExample
         }
         public bool IsPlaceKeyValid
         {
-            get { return PlaceKey > CtInt.ZERO;}
+            get { return PlaceKey > CtInt.ZERO; }
         }
         //private void GetCondition()
         //{
@@ -84,39 +89,48 @@ namespace classExample
         //        }
         //    }
         //}
-        public bool ConditionTooSmall
-        {
-            get { return Condition < CtInt.ZERO; }
-        }
-        public bool ConditionTooBig
-        {
-            get { return Condition > CtInt.PRCT_MAX; }
-        }
-        public bool ConditionValid
-        {
-            get { return !ConditionTooSmall && !ConditionTooBig; }
-        }
+        public bool ConditionTooSmall { get { return Condition < CtInt.INT_1; } }
+        public bool ConditionTooBig { get { return Condition > CtInt.PRCT_MAX; } }
+        public bool ConditionValid { get { return !ConditionTooSmall && !ConditionTooBig; } }
         public void SetCondition(string s)
         {
-            decimal.TryParse(s, out decimal d);
+            Style = NumberStyles.AllowDecimalPoint;
+            Culture = CultureInfo.InvariantCulture;
+            s = s.Replace(",", ".");
+            bool worked = decimal.TryParse(s,Style,Culture, out decimal d);
             Condition = d;
         }
+        //public void
         private void GetDayStored()
         {
             askmsg = "Which day stored?";
             errormsg2 = "Day cannot be lower than 1";
             DayStored = GetInt();
         }
+        public void SetDayStored(string s)
+        {
+            Int32.TryParse(s, out int i);
+            DayStored = i;
+        }
+        public bool DayStoredTooSmall { get { return DayStored < CtInt.DAY_MIN; } }
+        public bool DayStoredTooBig { get { return DayStored > CtInt.DAY_MAX; } }
         private void GetQuantity()
         {
             askmsg = "How many of current product?";
             errormsg2 = "Quantity cannot be lower than 1";
             Quantity = GetInt();
         }
-        public bool QuantityBiggerThanOne
+        public void SetQuantity(string s)
         {
-            get { return Quantity > CtInt.INT_1; }
+            Int32.TryParse(s, out int i);
+            Quantity = i;
         }
+        public bool QuantityTooSmall { get { return Quantity < CtInt.QTY_MIN; } }
+        public bool QuantityTooBig { get { return Quantity > CtInt.QTY_MAX; } }
+        //public bool QuantityBiggerThanOne
+        //{
+        //    get { return Quantity > CtInt.INT_1; }
+        //}
         //This is temporary solution, I need to map all the Places in game and name them and then we can add them to 
         //private void GetPlace()
         //{
@@ -158,7 +172,8 @@ namespace classExample
         }
         public void InsertStringAddToList(int iQuantity)
         {
-            insertString.Add($"INSERT INTO tInventory VALUES (GETDATE(),GETDATE(),1,'{ProductKey}','{RegionKey}','{Condition}','{DayStored}','{PlaceName}','{iQuantity}');");
+            string condition = Condition.ToString(Specifier, Culture);
+            insertString.Add($"INSERT INTO tInventory VALUES (GETDATE(),GETDATE(),1,'{ProductKey}','{RegionKey}','{condition}','{DayStored}','{PlaceName}','{iQuantity}');");
         }
         public void ViewInventory()
         {

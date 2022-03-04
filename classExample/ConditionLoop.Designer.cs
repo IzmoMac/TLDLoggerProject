@@ -55,9 +55,9 @@
             this.label_ConditionQuestion.AutoSize = true;
             this.label_ConditionQuestion.Location = new System.Drawing.Point(239, 146);
             this.label_ConditionQuestion.Name = "label_ConditionQuestion";
-            this.label_ConditionQuestion.Size = new System.Drawing.Size(252, 20);
+            this.label_ConditionQuestion.Size = new System.Drawing.Size(217, 20);
             this.label_ConditionQuestion.TabIndex = 2;
-            this.label_ConditionQuestion.Text = "Enter Condition value for item 1/10";
+            this.label_ConditionQuestion.Text = "Enter Condition value for item";
             // 
             // ConditionLoop
             // 
