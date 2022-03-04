@@ -36,7 +36,7 @@ namespace classExample
 
             //db.CreateNewProduct();
             //p.CreateNewProduct();
-            p.ViewInventory();
+            //p.ViewInventory();
             //Console.WriteLine(CProduct().test);
 
             //Console.WriteLine(db.GetProductKey());
@@ -44,15 +44,15 @@ namespace classExample
             //Console.WriteLine(db.GetCondition());
             //Console.WriteLine(db.GetDayStored());
             //Console.WriteLine(db.GetPlace());
-            bool testbool1 = false;
-            if(testbool1 == true)
+            bool testbool1 = true;
+            if(testbool1)
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new form_addItem());
             }
-       
-            
+
+
 
         }
     }

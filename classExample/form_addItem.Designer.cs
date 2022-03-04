@@ -76,7 +76,7 @@
             // 
             // textBox_place
             // 
-            this.textBox_place.Location = new System.Drawing.Point(27, 235);
+            this.textBox_place.Location = new System.Drawing.Point(486, 65);
             this.textBox_place.Multiline = true;
             this.textBox_place.Name = "textBox_place";
             this.textBox_place.Size = new System.Drawing.Size(296, 64);
@@ -90,6 +90,7 @@
             this.label_productName.Size = new System.Drawing.Size(110, 20);
             this.label_productName.TabIndex = 5;
             this.label_productName.Text = "Product Name";
+            this.label_productName.Click += new System.EventHandler(this.label_productName_Click);
             // 
             // label_condition
             // 
@@ -121,7 +122,7 @@
             // label_place
             // 
             this.label_place.AutoSize = true;
-            this.label_place.Location = new System.Drawing.Point(27, 208);
+            this.label_place.Location = new System.Drawing.Point(492, 39);
             this.label_place.Name = "label_place";
             this.label_place.Size = new System.Drawing.Size(264, 20);
             this.label_place.TabIndex = 9;
@@ -137,7 +138,7 @@
             // checkBox_multipleConditionValues
             // 
             this.checkBox_multipleConditionValues.AutoSize = true;
-            this.checkBox_multipleConditionValues.Location = new System.Drawing.Point(133, 166);
+            this.checkBox_multipleConditionValues.Location = new System.Drawing.Point(133, 168);
             this.checkBox_multipleConditionValues.Name = "checkBox_multipleConditionValues";
             this.checkBox_multipleConditionValues.Size = new System.Drawing.Size(285, 24);
             this.checkBox_multipleConditionValues.TabIndex = 11;
@@ -155,18 +156,19 @@
             // 
             // button_submitItem
             // 
-            this.button_submitItem.Location = new System.Drawing.Point(27, 356);
+            this.button_submitItem.Location = new System.Drawing.Point(27, 462);
             this.button_submitItem.Name = "button_submitItem";
             this.button_submitItem.Size = new System.Drawing.Size(216, 72);
             this.button_submitItem.TabIndex = 13;
             this.button_submitItem.Text = "Add Item";
             this.button_submitItem.UseVisualStyleBackColor = true;
+            this.button_submitItem.Click += new System.EventHandler(this.button_submitItem_Click);
             // 
             // form_addItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(717, 555);
+            this.ClientSize = new System.Drawing.Size(807, 573);
             this.Controls.Add(this.button_submitItem);
             this.Controls.Add(this.label_quantity);
             this.Controls.Add(this.checkBox_multipleConditionValues);
@@ -181,8 +183,10 @@
             this.Controls.Add(this.textBox_dayStored);
             this.Controls.Add(this.textBox_condition);
             this.Controls.Add(this.textBox_productName);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "form_addItem";
             this.Text = "TLDInventoryApp/AddItem";
+            this.Load += new System.EventHandler(this.form_addItem_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

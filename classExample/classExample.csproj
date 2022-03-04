@@ -77,6 +77,12 @@
     <Compile Include="CInput.cs" />
     <Compile Include="CMultiply.cs" />
     <Compile Include="CDatabase.cs" />
+    <Compile Include="ConditionLoop.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConditionLoop.Designer.cs">
+      <DependentUpon>ConditionLoop.cs</DependentUpon>
+    </Compile>
     <Compile Include="COutput.cs" />
     <Compile Include="CInventory.cs" />
     <Compile Include="CProduct.cs" />
@@ -104,6 +110,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ConditionLoop.resx">
+      <DependentUpon>ConditionLoop.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="form_addItem.resx">
       <DependentUpon>form_addItem.cs</DependentUpon>
     </EmbeddedResource>

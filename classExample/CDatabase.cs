@@ -118,25 +118,18 @@ namespace classExample
             QueryString = $"SELECT \"{a[0]}\" FROM \"{a[1]}\" WHERE \"{a[2]}\" = '{Condition}';";
 
         }
-        public int QuerySingleKey(string input)
+        public int QuerySingleKey()
         {
             if (!OpenConnection()) { return CtInt.ZERO; }
-
-            string returnValue = String.Empty;
+            int i = CtInt.ZERO;
             SqlCommand cmd = new SqlCommand(QueryString, connection);
             var result = cmd.ExecuteScalar();
-            if (result == null)
+            if (result != null)
             {
-                cn.Write($"{errormsg} ({input})");
-            }
-            else
-            {
-                returnValue = result.ToString();
-                cn.Write(correctmsg);
+                Int32.TryParse(result.ToString(), out i);
             }
             cmd.Dispose();
             CloseConnection();
-            Int32.TryParse(returnValue, out int i);
             return i;
         }
         public int GetInt()
@@ -210,6 +203,26 @@ namespace classExample
             }
             reader.Close();
             cmd.Dispose();
+        }
+      
+        
+        
+        //For inseting to database places
+        public void Addingplaces(string placeName)
+        {
+            var test = 0;
+            insertString.Add($"INSERT INTO tPlace VALUES (GETDATE(),GETDATE(),1,'{placeName}','{test});");
+        }
+        string[] places = {        };
+        public void foreachplacesinsertquuerytest()
+        {
+            foreach (string place in places)
+            {
+                Addingplaces(place);
+            }
+            finalInsertString = String.Join("\n", insertString);
+            Console.WriteLine(finalInsertString);
+            NonQuery();
         }
     }
 }
